@@ -1,4 +1,4 @@
-package Vistas.Componentes.Productos;
+package Vistas.Componentes;
 
 import Controladores.ProductoController;
 import Modelos.Producto;

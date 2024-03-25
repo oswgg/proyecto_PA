@@ -1,6 +1,6 @@
 package Vistas;
 
-import Vistas.Componentes.Productos.TablaVentas;
+import Vistas.Componentes.TablaVentas;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

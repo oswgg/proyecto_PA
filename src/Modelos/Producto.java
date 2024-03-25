@@ -8,13 +8,23 @@ public class Producto {
    int existencia;
    double precio;
 
-   public Producto(int idProducto, String nombreProducto, int idCategoria , int cantidad, double precio) {
+   public Producto(int idProducto, String nombreProducto, int idCategoria , int existencia, double precio) {
       this.idProducto = idProducto;
       this.nombreProducto = nombreProducto;
       this.idCategoria = idCategoria;
-      this.existencia = cantidad;
+      this.existencia = existencia;
       this.precio = precio;
    }
+
+   public Producto(int idProducto, String nombreProducto, int idCategoria ,int cantidad, int existencia, double precio) {
+      this.idProducto = idProducto;
+      this.nombreProducto = nombreProducto;
+      this.idCategoria = idCategoria;
+      this.cantidad = cantidad;
+      this.existencia = existencia;
+      this.precio = precio;
+   }
+
 
    public int getIdProducto() {
       return idProducto;
