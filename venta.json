@@ -1,18 +1,1 @@
-[
-  {
-    "idProducto": 26,
-    "nombreProducto": "Coca cole",
-    "cantidad": 1,
-    "idCategoria": 96,
-    "existencia": 2,
-    "precio": 21.5
-  },
-  {
-    "idProducto": 34,
-    "nombreProducto": "Huevos",
-    "cantidad": 1,
-    "idCategoria": 87,
-    "existencia": 5,
-    "precio": 50.0
-  }
-]
+[]

@@ -1,7 +1,5 @@
 package Controladores;
 
-import Modelos.Producto;
-
 import java.util.ArrayList;
 
 public interface Controller<T> {

@@ -75,33 +75,40 @@ public class ActionEditarCategoria extends JPanel implements ActionListener {
 
    @Override
    public void actionPerformed(ActionEvent e) {
-      // Obtengo todos los productos para posteriormente recuperar el producto seleccionado
-      ArrayList<Categoria> categorias = categoController.obtenerDatos();
-      int selectedItem = tablaCategorias.getSelectedRow(); // Obtiene el indice de la tabla del indice seleccionado
+     try {
+        // Obtengo todos los productos para posteriormente recuperar el producto seleccionado
+        ArrayList<Categoria> categorias = categoController.obtenerDatos();
+        int selectedItem = tablaCategorias.getSelectedRow(); // Obtiene el indice de la tabla del indice seleccionado
 
-      if(selectedItem == -1)
-         return;
+        if(selectedItem == -1)
+           return;
 
-      Categoria selectedProduct = categorias.get(selectedItem);  // Obtiene el producto en el indice seleccionado deberia de ser el mismo en la lista de productos
+        Categoria selectedProduct = categorias.get(selectedItem);  // Obtiene el producto en el indice seleccionado deberia de ser el mismo en la lista de productos
 
-      // Obtencion de datos
-      int id = selectedProduct.getIdCategoria();
-      String nombre = txt_nombre.getText();
+        // Obtencion de datos
+        int id = selectedProduct.getIdCategoria();
+        String nombre = txt_nombre.getText();
 
-      // Crea el nuevo producto con los datos modificados
-      Categoria nuevo = new Categoria(id, nombre);
-      boolean done = categoController.editar(id, nuevo);
+        if(nombre.isEmpty())
+            throw new Error();
 
-      // Si se hizo correctamente la modificacion actualiza la tabla
-      if(done) {
-         txt_nombre.setText("");
-         String categoriaString = categoController.getById(id).getCategoria();
-         Object[] item = {id, categoriaString};
-         // Actualiza campo por campo la fila del producto seleccionado
-         for(int i = 0; i < item.length; i++) {
-            tablaCategorias.setValueAt(item[i], selectedItem, i);
-         }
-      }
+        // Crea el nuevo producto con los datos modificados
+        Categoria nuevo = new Categoria(id, nombre);
+        boolean done = categoController.editar(id, nuevo);
+
+        // Si se hizo correctamente la modificacion actualiza la tabla
+        if(done) {
+           txt_nombre.setText("");
+           String categoriaString = categoController.getById(id).getCategoria();
+           Object[] item = {id, categoriaString};
+           // Actualiza campo por campo la fila del producto seleccionado
+           for(int i = 0; i < item.length; i++) {
+              tablaCategorias.setValueAt(item[i], selectedItem, i);
+           }
+        }
+     } catch (Error err) {
+        JOptionPane.showMessageDialog(null, "Por favor ingresa todos los datos necesarios, con sus tipos de datos correspondientes");
+     }
 
    }
 

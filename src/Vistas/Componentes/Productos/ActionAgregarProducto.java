@@ -130,26 +130,35 @@ public class ActionAgregarProducto extends JPanel implements ActionListener {
    @Override
    public void actionPerformed(ActionEvent e) {
       // Obtiene todos los datos del producto de los cuadros de texto
-      String nombreProducto = txt_nombreProducto.getText();
-      int cantProducto = Integer.parseInt(txt_cantidad.getText());
-      double precioProducto = Double.parseDouble(txt_precio.getText());
+      try {
+         String nombreProducto = txt_nombreProducto.getText();
+         int cantProducto = Integer.parseInt(txt_cantidad.getText());
+         double precioProducto = Double.parseDouble(txt_precio.getText());
 
-      // Obtiene el id de la categoria mediante el ComboItem
-      Object selectedItem = cB_categoria.getSelectedItem();
-      int idCategoriaProducto = ((ComboItem) selectedItem).getKey();
+         // Obtiene el id de la categoria mediante el ComboItem
+         Object selectedItem = cB_categoria.getSelectedItem();
+         int idCategoriaProducto = ((ComboItem) selectedItem).getKey();
 
-      int idProducto = (int) (Math.random() * 100);
+         int idProducto = (int) (Math.random() * 100);
 
-      // Guarda el producto
-      Producto nuevo = new Producto(idProducto, nombreProducto, idCategoriaProducto, cantProducto, precioProducto);
-      boolean done = prodController.agregar(nuevo);
+         if(nombreProducto.isEmpty())
+            throw new Error();
+         // Guarda el producto
+         Producto nuevo = new Producto(idProducto, nombreProducto, idCategoriaProducto, cantProducto, precioProducto);
+         boolean done = prodController.agregar(nuevo);
 
-      // Si se guarda los campos se vacian
-      if (done) {
-         txt_nombreProducto.setText("");
-         txt_cantidad.setText("");
-         txt_precio.setText("");
-         cB_categoria.setSelectedIndex(0);
+         // Si se guarda los campos se vacian
+         if (done) {
+            txt_nombreProducto.setText("");
+            txt_cantidad.setText("");
+            txt_precio.setText("");
+            cB_categoria.setSelectedIndex(0);
+         }
+      } catch (NumberFormatException err) {
+         JOptionPane.showMessageDialog(null, "Por favor ingresa correctamente los datos");
+      } catch (Error err) {
+         JOptionPane.showMessageDialog(null, "Por favor ingresa correctamente los datos");
+
       }
 
    }

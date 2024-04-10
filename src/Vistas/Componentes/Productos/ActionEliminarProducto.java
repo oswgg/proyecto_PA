@@ -40,7 +40,6 @@ public class ActionEliminarProducto extends JPanel implements ActionListener {
 
    @Override
    public void actionPerformed(ActionEvent e) {
-      System.out.println("Hola");
 
       ArrayList<Producto> productos = productosController.obtenerDatos();
       int selectedItem = tablaProductos.getSelectedRow();

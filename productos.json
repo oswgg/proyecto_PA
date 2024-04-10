@@ -1,18 +1,18 @@
 [
   {
-    "idProducto": 26,
-    "nombreProducto": "Coca cole",
+    "idProducto": 71,
+    "nombreProducto": "Coca Cola 600 ml",
     "cantidad": 0,
-    "idCategoria": 96,
-    "existencia": 2,
-    "precio": 21.5
+    "idCategoria": 57,
+    "existencia": 50,
+    "precio": 18.0
   },
   {
-    "idProducto": 34,
+    "idProducto": 47,
     "nombreProducto": "Huevos",
     "cantidad": 0,
-    "idCategoria": 87,
-    "existencia": 5,
-    "precio": 50.0
+    "idCategoria": 43,
+    "existencia": 25,
+    "precio": 75.0
   }
 ]
