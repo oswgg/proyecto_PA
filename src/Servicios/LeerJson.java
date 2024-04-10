@@ -22,7 +22,8 @@ public class LeerJson<T> {
 
          // Selecciona el archivo y el tipo de Clase que debe devolver
          switch (path){
-            case "productos.json" :
+            case "productos.json":
+            case "venta.json":
                ArrayList<Producto> productos = gson.fromJson(fr, new TypeToken<List<Producto>>(){}.getType());
                listaDatos = (ArrayList<T>) productos;
                break;
@@ -31,6 +32,7 @@ public class LeerJson<T> {
                ArrayList<Categoria> categorias = gson.fromJson(fr, new TypeToken<List<Categoria>>(){}.getType());
                listaDatos = (ArrayList<T>) categorias;
                break;
+
          }
       } catch (FileNotFoundException e){
          System.out.println("Archivo no encontrado");

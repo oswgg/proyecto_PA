@@ -39,4 +39,6 @@ public class Producto {
    public int getExistencia() {
       return this.existencia;
    }
+
+   public void setCantidad(int cant) { this.cantidad = cant;}
 }
