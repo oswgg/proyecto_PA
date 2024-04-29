@@ -154,6 +154,7 @@ public class ActionAgregarProducto extends JPanel implements ActionListener {
             txt_precio.setText("");
             cB_categoria.setSelectedIndex(0);
          }
+
       } catch (NumberFormatException err) {
          JOptionPane.showMessageDialog(null, "Por favor ingresa correctamente los datos");
       } catch (Error err) {

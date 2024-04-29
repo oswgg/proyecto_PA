@@ -14,5 +14,21 @@
     "idCategoria": 43,
     "existencia": 25,
     "precio": 75.0
+  },
+  {
+    "idProducto": 37,
+    "nombreProducto": "Oswaldo",
+    "cantidad": 0,
+    "idCategoria": 57,
+    "existencia": 1,
+    "precio": 100.0
+  },
+  {
+    "idProducto": 56,
+    "nombreProducto": "cristopher",
+    "cantidad": 0,
+    "idCategoria": 43,
+    "existencia": 1,
+    "precio": 500.0
   }
 ]

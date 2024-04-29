@@ -9,8 +9,9 @@ public class vPrincipal extends JFrame implements ActionListener {
    vProductos vistaProductos = new vProductos();
    vCategorias vistaCategorias = new vCategorias();
    vPuntoVenta vistaPtoVenta = new vPuntoVenta();
+   vTickets vistaTickets = new vTickets();
 
-   JMenuItem productos, categorias, puntoVenta, salidaBtn;
+   JMenuItem productos, categorias, tickets, puntoVenta, salidaBtn;
    public vPrincipal() {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       JMenuBar miBarra = new JMenuBar();
@@ -24,7 +25,7 @@ public class vPrincipal extends JFrame implements ActionListener {
       puntoVenta = new JMenuItem("Punto de venta");
       productos = new JMenuItem("Productos");
       categorias = new JMenuItem("Categorias");
-
+      tickets = new JMenuItem("Tickets");
       salidaBtn = new JMenuItem("Salida");
 
       miBarra.add(ptoVenta);
@@ -35,11 +36,12 @@ public class vPrincipal extends JFrame implements ActionListener {
 
       puntoVenta.addActionListener(this);
       productos.addActionListener(this);
+      tickets.addActionListener(this);
       categorias.addActionListener(this);
       salidaBtn.addActionListener(this);
 
       ptoVenta.add(puntoVenta);
-
+      reportes.add(tickets);
       configuracion.add(productos);
       configuracion.add(categorias);
       salida.add(salidaBtn);
@@ -67,6 +69,7 @@ public class vPrincipal extends JFrame implements ActionListener {
    @Override
    public void actionPerformed(ActionEvent e) {
       remove(vistaProductos);
+      remove(vistaTickets);
       remove(vistaCategorias);
       remove(vistaPtoVenta);
 
@@ -74,6 +77,10 @@ public class vPrincipal extends JFrame implements ActionListener {
          vistaPtoVenta = new vPuntoVenta();
          vistaPtoVenta.setLocation(0, 0);
          add(vistaPtoVenta);
+      } else if(e.getSource() == tickets) {
+          vistaTickets = new vTickets();
+          vistaTickets.setLocation(0, 0);
+          add(vistaTickets);
       } else if(e.getSource() == productos){
          vistaProductos = new vProductos();
          vistaProductos.setLocation(0, 0);

@@ -40,5 +40,49 @@
       }
     ],
     "total": 54.0
+  },
+  {
+    "id": 91,
+    "productosVendidos": [
+      {
+        "idProducto": 47,
+        "nombreProducto": "Huevos",
+        "cantidad": 1,
+        "idCategoria": 43,
+        "existencia": 25,
+        "precio": 75.0
+      },
+      {
+        "idProducto": 71,
+        "nombreProducto": "Coca Cola 600 ml",
+        "cantidad": 1,
+        "idCategoria": 57,
+        "existencia": 50,
+        "precio": 18.0
+      }
+    ],
+    "total": 93.0
+  },
+  {
+    "id": 12,
+    "productosVendidos": [
+      {
+        "idProducto": 37,
+        "nombreProducto": "Oswaldo",
+        "cantidad": 1,
+        "idCategoria": 57,
+        "existencia": 1,
+        "precio": 100.0
+      },
+      {
+        "idProducto": 71,
+        "nombreProducto": "Coca Cola 600 ml",
+        "cantidad": 30,
+        "idCategoria": 57,
+        "existencia": 50,
+        "precio": 18.0
+      }
+    ],
+    "total": 640.0
   }
 ]
