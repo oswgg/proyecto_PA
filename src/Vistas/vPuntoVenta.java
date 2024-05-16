@@ -2,22 +2,33 @@ package Vistas;
 
 import Vistas.Componentes.TablaVentas;
 
+import Controladores.VentaController;
+import Modelos.Producto;
+import Modelos.Venta;
+import Servicios.CrearJson;
+import Servicios.LeerJson;
+import Vistas.Componentes.TablaVentas;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class vPuntoVenta extends JPanel {
    JLabel lblTotal;
    JButton btnCobrar, btnAgregar;
-
+   VentaController ventaController = new VentaController();
+   CrearJson<Producto> toJson = new CrearJson<>();
+   LeerJson<Producto> fromJson = new LeerJson<>();
    TablaVentas ptoVentaModelo = new TablaVentas();
    DefaultTableModel modeloTabla = ptoVentaModelo.getModelo();
    JTable tablaVentas = ptoVentaModelo.getTable();
+   vElegirProducto elegirProducto = new vElegirProducto();
 
    public vPuntoVenta () {
-
       GridBagLayout gbl_layout = new GridBagLayout();
       gbl_layout.columnWidths = new int[]{50, 0, 50};
       gbl_layout.rowHeights = new int[]{0, 0, 0};
@@ -117,17 +128,56 @@ public class vPuntoVenta extends JPanel {
             handleCobrar();
          }
       });
+
+      elegirProducto.addWindowListener(new WindowAdapter() {
+
+         //TODO:  Falta que la tabla se actualice al momento de cerrar la venta de elegir producto
+         @Override
+         public void windowDeactivated(WindowEvent e) {
+            refreshData();
+         }
+      });
+      this.refreshData();
    }
 
 
    public void handleAgregar() {
-      vElegirProducto elegirProducto = new vElegirProducto();
-
       elegirProducto.setVisible(true);
    }
 
+   public void refreshData() {
+      ptoVentaModelo.refreshData();
+
+      ArrayList<Producto> productos = fromJson.getDatos("venta.json");
+
+      double total = 0;
+      for(Producto prod : productos) {
+         total += prod.getPrecio() * prod.getCantidad();
+      }
+
+      lblTotal.setText("$" + total);
+   }
+
    public void handleCobrar() {
-      System.out.println("Hola mundo");
+      int idVenta = (int) (Math.random() * 100);
+      ArrayList<Producto> productosVendidos = fromJson.getDatos("venta.json");
+
+      if(productosVendidos.isEmpty())
+         return;
+
+      String totalSplit = lblTotal.getText().split("\\$")[1];
+      double total = Double.parseDouble(totalSplit);
+
+      Venta nuevaVenta = new Venta(idVenta, productosVendidos, total);
+
+      ventaController.agregar(nuevaVenta);
+
+      productosVendidos.clear();
+      boolean done = toJson.convertirJson("venta.json", productosVendidos);
+
+      if(done)
+         JOptionPane.showMessageDialog(null, "Venta realizada con éxito, ahora se encuentra en el reporte de ventas");
+      this.refreshData();
    }
 
 }

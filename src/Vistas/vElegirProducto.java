@@ -1,21 +1,29 @@
 package Vistas;
 
+import Controladores.ProductoController;
+import Modelos.Producto;
+import Servicios.CrearJson;
+import Servicios.LeerJson;
 import Vistas.Componentes.Productos.TableProductos;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class vElegirProducto extends JFrame {
    TableProductos modeloProductos = new TableProductos();
    JTable tablaProds = modeloProductos.getTable();
    DefaultTableModel modeloTabla = modeloProductos.getModelo();
+   ProductoController prodController = new ProductoController();
    JSpinner spinnerCant;
    public vElegirProducto() {
-      setTitle("Ejemplo de ActionListener");
+      setTitle("Elige un producto");
       setSize(600, 400);
       setLocation(850, 200);
-      setVisible(true);
+      setVisible(false);
 
       GridBagLayout gbl_layout = new GridBagLayout();
       gbl_layout.columnWidths = new int[]{50, 0, 50};
@@ -53,6 +61,61 @@ public class vElegirProducto extends JFrame {
       panel.add(spinnerCant, bgc_spinner);
 
       JButton btnAgregar = new JButton("Agregar");
+      GridBagConstraints bgc_bagregar = new GridBagConstraints();
+      bgc_bagregar.fill = GridBagConstraints.BOTH;
+      bgc_bagregar.gridx = 1;
+      bgc_bagregar.gridy = 0;
+      panel.add(btnAgregar, bgc_bagregar);
 
+      btnAgregar.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            obtenerProducto();
+         }
+      });
+
+
+   }
+
+   public void obtenerProducto() {
+      ArrayList<Producto> prods = prodController.obtenerDatos();
+      int selectedIndex = tablaProds.getSelectedRow();
+
+      if(selectedIndex == -1)
+         return;
+
+      Producto selectedProd = prods.get(selectedIndex);
+      selectedProd.setCantidad((Integer) spinnerCant.getValue());
+
+      LeerJson<Producto> fromJson = new LeerJson<>();
+      CrearJson<Producto> toJson = new CrearJson<>();
+      ArrayList<Producto> prodsSeleccionados = fromJson.getDatos("venta.json");
+
+      // Si encuentra el prod que ya está seleccionado solo modifica la cantidad de productos que habra por vender
+      boolean found = false;
+      for(Producto prod : prodsSeleccionados) {
+         if(selectedProd.getIdProducto() == prod.getIdProducto()) {
+            found = true;
+            int cant = prod.getCantidad() + selectedProd.getCantidad();
+            prod.setCantidad(cant);
+
+            if(selectedProd.getCantidad() < 0 ){
+               if(cant <= 0) {
+                  prodsSeleccionados.remove(prod);
+               }
+            }
+
+            break;
+         }
+
+      }
+
+      // sino añade el producto a la lista
+      if(!found)
+         prodsSeleccionados.add(selectedProd);
+
+      toJson.convertirJson("venta.json", prodsSeleccionados);
+      spinnerCant.setValue(0);
+      this.setVisible(false);
    }
 }

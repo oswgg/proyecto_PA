@@ -77,20 +77,28 @@ public class ActionAgregarCategoria extends JPanel implements ActionListener {
    // Obtiene todos los datos de la categoria desde los inputs de texto
    @Override
    public void actionPerformed(ActionEvent e) {
-      String nombreCategoria = txt_nombreCategoria.getText();
-      int idCategoria = (int) (Math.random() * 100);
+     try {
+        String nombreCategoria = txt_nombreCategoria.getText();
+        int idCategoria = (int) (Math.random() * 100);
 
-      Categoria nuevo = new Categoria(idCategoria, nombreCategoria); // Guarda la categoria
+        if(nombreCategoria.isEmpty())
+            throw new Error();
 
-      boolean done = categoriaController.agregar(nuevo);
+        Categoria nuevo = new Categoria(idCategoria, nombreCategoria); // Guarda la categoria
 
-      // Si se guardo, actualiza la tabla y reinicia el input
-      if (done) {
-         txt_nombreCategoria.setText("");
-         Object[] item = {idCategoria, nombreCategoria};
-         // Actualiza campo por campo la fila del producto seleccionado
-         modeloTabla.addRow(item);
-      }
+        boolean done = categoriaController.agregar(nuevo);
+
+        // Si se guardo, actualiza la tabla y reinicia el input
+        if (done) {
+           txt_nombreCategoria.setText("");
+           Object[] item = {idCategoria, nombreCategoria};
+           // Actualiza campo por campo la fila del producto seleccionado
+           modeloTabla.addRow(item);
+        }
+     } catch (Error err) {
+        JOptionPane.showMessageDialog(null, "Por favor ingresa correctamente los datos");
+
+     }
 
    }
 }

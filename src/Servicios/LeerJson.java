@@ -2,6 +2,7 @@ package Servicios;
 
 import Modelos.Categoria;
 import Modelos.Producto;
+import Modelos.Venta;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -22,7 +23,8 @@ public class LeerJson<T> {
 
          // Selecciona el archivo y el tipo de Clase que debe devolver
          switch (path){
-            case "productos.json" :
+            case "productos.json":
+            case "venta.json":
                ArrayList<Producto> productos = gson.fromJson(fr, new TypeToken<List<Producto>>(){}.getType());
                listaDatos = (ArrayList<T>) productos;
                break;
@@ -30,6 +32,11 @@ public class LeerJson<T> {
             case "categorias.json":
                ArrayList<Categoria> categorias = gson.fromJson(fr, new TypeToken<List<Categoria>>(){}.getType());
                listaDatos = (ArrayList<T>) categorias;
+               break;
+
+            case "reporteVentas.json":
+               ArrayList<Venta> ventas = gson.fromJson(fr, new TypeToken<List<Venta>>(){}.getType());
+               listaDatos = (ArrayList<T>) ventas;
                break;
          }
       } catch (FileNotFoundException e){

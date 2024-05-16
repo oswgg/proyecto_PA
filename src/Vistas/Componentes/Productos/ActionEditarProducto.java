@@ -147,35 +147,45 @@ public class ActionEditarProducto extends JPanel implements ActionListener{
    @Override
    public void actionPerformed(ActionEvent e) {
       // Obtengo todos los productos para posteriormente recuperar el producto seleccionado
-      ArrayList<Producto> productos = prodController.obtenerDatos();
-      int selectedItem = tablaProductos.getSelectedRow(); // Obtiene el indice de la tabla del indice seleccionado
+      try {
+         ArrayList<Producto> productos = prodController.obtenerDatos();
+         int selectedItem = tablaProductos.getSelectedRow(); // Obtiene el indice de la tabla del indice seleccionado
 
-      if(selectedItem == -1)
-         return;
+         if(selectedItem == -1)
+            return;
 
-      Producto selectedProduct = productos.get(selectedItem);  // Obtiene el producto en el indice seleccionado deberia de ser el mismo en la lista de productos
+         Producto selectedProduct = productos.get(selectedItem);  // Obtiene el producto en el indice seleccionado deberia de ser el mismo en la lista de productos
 
-      // Obtencion de datos
-      int id = selectedProduct.getIdProducto();
-      String nombre = txt_nombre.getText();
-      int cantidad = Integer.parseInt(txt_cantidad.getText());
-      double precio = Double.parseDouble(txt_precio.getText());
+         // Obtencion de datos
+         int id = selectedProduct.getIdProducto();
+         String nombre = txt_nombre.getText();
+         int cantidad = Integer.parseInt(txt_cantidad.getText());
+         double precio = Double.parseDouble(txt_precio.getText());
 
-      Object selectedCombo = combo.getSelectedItem();
-      int idCategoria = ((ComboItem) selectedCombo).getKey();
+         Object selectedCombo = combo.getSelectedItem();
+         int idCategoria = ((ComboItem) selectedCombo).getKey();
 
-      // Crea el nuevo producto con los datos modificados
-      Producto nuevo = new Producto(id, nombre, idCategoria, cantidad, precio);
-      boolean done = prodController.editar(nuevo.getIdProducto(), nuevo);
+         if(nombre.isEmpty())
+            throw new Error();
 
-      // Si se hizo correctamente la modificacion actualiza la tabla
-      if(done) {
-         String categoriaString = categoController.getById(idCategoria).getCategoria();
-         Object[] item = {id, nombre, cantidad, categoriaString, precio};
-         // Actualiza campo por campo la fila del producto seleccionado
-         for(int i = 0; i < item.length; i++) {
-            tablaProductos.setValueAt(item[i], selectedItem, i);
+         // Crea el nuevo producto con los datos modificados
+         Producto nuevo = new Producto(id, nombre, idCategoria, cantidad, precio);
+         boolean done = prodController.editar(nuevo.getIdProducto(), nuevo);
+
+         // Si se hizo correctamente la modificacion actualiza la tabla
+         if(done) {
+            String categoriaString = categoController.getById(idCategoria).getCategoria();
+            Object[] item = {id, nombre, cantidad, categoriaString, precio};
+            // Actualiza campo por campo la fila del producto seleccionado
+            for(int i = 0; i < item.length; i++) {
+               tablaProductos.setValueAt(item[i], selectedItem, i);
+            }
          }
+      } catch (NumberFormatException err) {
+         JOptionPane.showMessageDialog(null, "Por favor ingresa correctamente los datos");
+      } catch (Error err) {
+         JOptionPane.showMessageDialog(null, "Por favor ingresa correctamente los datos");
+
       }
 
    }
