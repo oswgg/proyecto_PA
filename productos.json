@@ -1,34 +1,10 @@
 [
   {
-    "idProducto": 71,
-    "nombreProducto": "Coca Cola 600 ml",
+    "idProducto": 9,
+    "nombreProducto": "Coca Cola",
     "cantidad": 0,
-    "idCategoria": 57,
-    "existencia": 50,
+    "idCategoria": 5,
+    "existencia": 5,
     "precio": 18.0
-  },
-  {
-    "idProducto": 47,
-    "nombreProducto": "Huevos",
-    "cantidad": 0,
-    "idCategoria": 43,
-    "existencia": 25,
-    "precio": 75.0
-  },
-  {
-    "idProducto": 37,
-    "nombreProducto": "Oswaldo",
-    "cantidad": 0,
-    "idCategoria": 57,
-    "existencia": 1,
-    "precio": 100.0
-  },
-  {
-    "idProducto": 56,
-    "nombreProducto": "cristopher",
-    "cantidad": 0,
-    "idCategoria": 43,
-    "existencia": 1,
-    "precio": 500.0
   }
 ]

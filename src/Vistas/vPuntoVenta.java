@@ -1,5 +1,8 @@
 package Vistas;
 
+import Controladores.ProductoController;
+import Vistas.Componentes.TablaVentas;
+
 import Controladores.VentaController;
 import Modelos.Producto;
 import Modelos.Venta;
@@ -16,8 +19,9 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class vPuntoVenta extends JPanel {
+   ProductoController prodController = new ProductoController();
    JLabel lblTotal;
-   JButton btnCobrar, btnAgregar;
+   JButton btnCobrar, btnAgregar, btnQuitarProd;
    VentaController ventaController = new VentaController();
    CrearJson<Producto> toJson = new CrearJson<>();
    LeerJson<Producto> fromJson = new LeerJson<>();
@@ -103,6 +107,15 @@ public class vPuntoVenta extends JPanel {
       gbc_btnCobrar.gridy = 0;
       panel2.add(btnCobrar, gbc_btnCobrar);
 
+      btnQuitarProd = new JButton("Eliminar");
+      btnQuitarProd.setFont(new Font("Lucida Grande", Font.BOLD | Font.ITALIC, 24));
+      GridBagConstraints gbc_btnQuitarProd = new GridBagConstraints();
+      gbc_btnQuitarProd.fill = GridBagConstraints.VERTICAL;
+      gbc_btnQuitarProd.insets = new Insets(0, 0, 0, 5);
+      gbc_btnQuitarProd.gridx = 1;
+      gbc_btnQuitarProd.gridy = 0;
+      panel2.add(btnQuitarProd, gbc_btnQuitarProd);
+
       lblTotal = new JLabel("$ 0.00");
       lblTotal.setForeground(new Color(32, 62, 210));
       lblTotal.setFont(new Font("Lucida Grande", Font.BOLD, 45));
@@ -124,6 +137,13 @@ public class vPuntoVenta extends JPanel {
          @Override
          public void actionPerformed(ActionEvent e) {
             handleCobrar();
+         }
+      });
+
+      btnQuitarProd.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            eliminarProd();
          }
       });
 
@@ -168,13 +188,39 @@ public class vPuntoVenta extends JPanel {
 
       Venta nuevaVenta = new Venta(idVenta, productosVendidos, total);
 
-      ventaController.agregar(nuevaVenta);
+      boolean done1 = ventaController.registrarVenta(productosVendidos, total);
+      if(done1) {
+         ventaController.agregar(nuevaVenta);
+         productosVendidos.clear();
+         boolean done2 = toJson.convertirJson("venta.json", productosVendidos);
 
-      productosVendidos.clear();
-      boolean done = toJson.convertirJson("venta.json", productosVendidos);
+         if(done2)
+            JOptionPane.showMessageDialog(null, "Venta realizada con éxito, ahora se encuentra en el reporte de ventas");
+      }
+      this.refreshData();
+   }
 
-      if(done)
-         JOptionPane.showMessageDialog(null, "Venta realizada con éxito, ahora se encuentra en el reporte de ventas");
+   public void eliminarProd() {
+      ArrayList<Producto> prods = prodController.obtenerDatos();
+      int selectedIndex = tablaVentas.getSelectedRow();
+
+      if(selectedIndex == -1)
+         return;
+
+      Producto selectedProd = prods.get(selectedIndex);
+
+      LeerJson<Producto> fromJson = new LeerJson<>();
+      CrearJson<Producto> toJson = new CrearJson<>();
+      ArrayList<Producto> prodsSeleccionados = fromJson.getDatos("venta.json");
+
+      for(Producto prod : prodsSeleccionados) {
+         if(selectedProd.getIdProducto() == prod.getIdProducto()) {
+                  prodsSeleccionados.remove(prod);
+            break;
+         }
+      }
+
+      toJson.convertirJson("venta.json", prodsSeleccionados);
       this.refreshData();
    }
 
