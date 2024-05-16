@@ -26,6 +26,7 @@ public class CategoriaController implements Controller<Categoria> {
    @Override
    public boolean agregar(Categoria toInsert) {
       boolean done = false;
+      listaCategorias.insert(toInsert);
       try {
          PreparedStatement pstmt = db.conn.prepareStatement("INSERT INTO categorias(nombre) VALUES(?)");
          pstmt.setString(1, toInsert.getCategoria());
@@ -66,6 +67,10 @@ public class CategoriaController implements Controller<Categoria> {
    public boolean editar(int id, Categoria updated) {
       boolean done = false;
 
+      int pos = this.encontrarPos(id);
+      if(pos != -1)
+          listaCategorias.update(pos, updated);
+
       try {
 
          PreparedStatement pstmt = db.conn.prepareStatement("UPDATE categorias SET nombre = ? WHERE id = " + id);
@@ -85,6 +90,10 @@ public class CategoriaController implements Controller<Categoria> {
    @Override
    public boolean eliminar(int id) {
       boolean done = false;
+
+      int pos = this.encontrarPos(id);
+      if(pos != -1)
+          listaCategorias.delete(pos);
 
       try {
          db.stmt.execute("DELETE FROM categorias WHERE id = " + id);

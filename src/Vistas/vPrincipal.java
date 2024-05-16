@@ -10,8 +10,9 @@ public class vPrincipal extends JFrame implements ActionListener {
    vCategorias vistaCategorias = new vCategorias();
    vPuntoVenta vistaPtoVenta = new vPuntoVenta();
    vTickets vistaTickets = new vTickets();
+   vAlmacen vistaAlmacen = new vAlmacen();
 
-   JMenuItem productos, categorias, tickets, puntoVenta, salidaBtn;
+   JMenuItem productos, categorias, tickets, puntoVenta, salidaBtn, almacenBtn;
    public vPrincipal() {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       JMenuBar miBarra = new JMenuBar();
@@ -27,6 +28,7 @@ public class vPrincipal extends JFrame implements ActionListener {
       categorias = new JMenuItem("Categorias");
       tickets = new JMenuItem("Tickets");
       salidaBtn = new JMenuItem("Salida");
+      almacenBtn = new JMenuItem("Almacen");
 
       miBarra.add(ptoVenta);
       miBarra.add(almacen);
@@ -39,13 +41,14 @@ public class vPrincipal extends JFrame implements ActionListener {
       tickets.addActionListener(this);
       categorias.addActionListener(this);
       salidaBtn.addActionListener(this);
+      almacenBtn.addActionListener(this);
 
       ptoVenta.add(puntoVenta);
       reportes.add(tickets);
       configuracion.add(productos);
       configuracion.add(categorias);
       salida.add(salidaBtn);
-
+      almacen.add(almacenBtn);
 
       setJMenuBar(miBarra);
 
@@ -72,6 +75,7 @@ public class vPrincipal extends JFrame implements ActionListener {
       remove(vistaTickets);
       remove(vistaCategorias);
       remove(vistaPtoVenta);
+      remove(vistaAlmacen);
 
       if(e.getSource() == puntoVenta) {
          vistaPtoVenta = new vPuntoVenta();
@@ -92,6 +96,10 @@ public class vPrincipal extends JFrame implements ActionListener {
       } else if (e.getSource() == salidaBtn){
          dispose();
          System.exit(0);
+      } else if(e.getSource() == almacenBtn) {
+         vistaAlmacen = new vAlmacen();
+         vistaAlmacen.setLocation(0, 0);
+         add(vistaAlmacen);
       }
 
       revalidate();
