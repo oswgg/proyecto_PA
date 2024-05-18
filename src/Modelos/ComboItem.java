@@ -12,7 +12,6 @@ public class ComboItem {
       this.value = value;
    }
 
-
    public int getKey()
    {
       return key;

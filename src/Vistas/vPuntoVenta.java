@@ -53,7 +53,7 @@ public class vPuntoVenta extends JPanel {
       gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0 };
       panel.setLayout(gbl_panel);
 
-      JLabel lblNewLabel = new JLabel("Oswgg Ventas");
+      JLabel lblNewLabel = new JLabel("Palitos Ventas");
       lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 28));
       GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
       gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);

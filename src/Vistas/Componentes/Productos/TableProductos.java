@@ -16,7 +16,7 @@ public class TableProductos extends JTable {
    JTable tablaProductos;
    CategoriaController categoController = new CategoriaController();
 
-   public TableProductos() {
+   public TableProductos(boolean existentes) {
       modeloTabla.addColumn("ID");
       modeloTabla.addColumn("Nombre");
       modeloTabla.addColumn("Cantidad");
@@ -26,7 +26,7 @@ public class TableProductos extends JTable {
       tablaProductos = new JTable(modeloTabla);
       tablaProductos.setPreferredScrollableViewportSize(new Dimension(800, 150)); // Ancho x Alto
 
-      ArrayList<Producto> productos = prodController.obtenerDatos();
+      ArrayList<Producto> productos = existentes ? prodController.getExistentes()  : prodController.obtenerDatos();
 
       // Llena la tabla de los productos guardados
       productos.forEach(producto -> {

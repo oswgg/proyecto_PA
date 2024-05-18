@@ -11,8 +11,9 @@ public class vPrincipal extends JFrame implements ActionListener {
    vPuntoVenta vistaPtoVenta = new vPuntoVenta();
    vTickets vistaTickets = new vTickets();
    vAlmacen vistaAlmacen = new vAlmacen();
+   vProveedores vistaProveedores = new vProveedores();
 
-   JMenuItem productos, categorias, tickets, puntoVenta, salidaBtn, almacenBtn;
+   JMenuItem productos, categorias, tickets, puntoVenta, salidaBtn, almacenBtn, proveedores;
    public vPrincipal() {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       JMenuBar miBarra = new JMenuBar();
@@ -29,6 +30,7 @@ public class vPrincipal extends JFrame implements ActionListener {
       tickets = new JMenuItem("Tickets");
       salidaBtn = new JMenuItem("Salida");
       almacenBtn = new JMenuItem("Almacen");
+      proveedores = new JMenuItem("Proveedores");
 
       miBarra.add(ptoVenta);
       miBarra.add(almacen);
@@ -42,11 +44,14 @@ public class vPrincipal extends JFrame implements ActionListener {
       categorias.addActionListener(this);
       salidaBtn.addActionListener(this);
       almacenBtn.addActionListener(this);
+      proveedores.addActionListener(this);
+
 
       ptoVenta.add(puntoVenta);
       reportes.add(tickets);
       configuracion.add(productos);
       configuracion.add(categorias);
+      configuracion.add(proveedores);
       salida.add(salidaBtn);
       almacen.add(almacenBtn);
 
@@ -76,6 +81,7 @@ public class vPrincipal extends JFrame implements ActionListener {
       remove(vistaCategorias);
       remove(vistaPtoVenta);
       remove(vistaAlmacen);
+      remove(vistaProveedores);
 
       if(e.getSource() == puntoVenta) {
          vistaPtoVenta = new vPuntoVenta();
@@ -100,6 +106,10 @@ public class vPrincipal extends JFrame implements ActionListener {
          vistaAlmacen = new vAlmacen();
          vistaAlmacen.setLocation(0, 0);
          add(vistaAlmacen);
+      } else if(e.getSource() == proveedores) {
+         vistaProveedores = new vProveedores();
+         vistaProveedores.setLocation(0, 0);
+         add(vistaProveedores);
       }
 
       revalidate();

@@ -6,6 +6,9 @@ import Vistas.Componentes.Productos.ActionAgregarProducto;
 import Vistas.Componentes.Categorias.ActionEditarCategoria;
 import Vistas.Componentes.Productos.ActionEditarProducto;
 import Vistas.Componentes.Productos.ActionEliminarProducto;
+import Vistas.Componentes.Proveedores.ActionAgregarProveedor;
+import Vistas.Componentes.Proveedores.ActionEditarProveedor;
+import Vistas.Componentes.Proveedores.ActionEliminarProveedor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,7 +54,7 @@ public class SelectAction extends JPanel {
 
             ActionAgregarProducto agregarProducto = new ActionAgregarProducto();
             ActionAgregarCategoria agregarCategoria = new ActionAgregarCategoria();
-
+            ActionAgregarProveedor agregarProv = new ActionAgregarProveedor();
 
             GridBagConstraints gbl_agregar = new GridBagConstraints();
             gbl_agregar.gridx = 1;
@@ -62,6 +65,9 @@ public class SelectAction extends JPanel {
 
             else if(Objects.equals(vista, "categorias"))
                jpanel.add(agregarCategoria, gbl_agregar);
+
+            else if(Objects.equals(vista, "proveedores"))
+               jpanel.add(agregarProv, gbl_agregar);
 
             jpanel.revalidate();
             jpanel.repaint();
@@ -76,6 +82,7 @@ public class SelectAction extends JPanel {
             jpanel.remove(1);
             ActionEditarProducto editarProducto= new ActionEditarProducto();
             ActionEditarCategoria editarCategoria = new ActionEditarCategoria();
+            ActionEditarProveedor editarProv = new ActionEditarProveedor();
 
             GridBagConstraints gbl_editar = new GridBagConstraints();
             gbl_editar.gridx = 1;
@@ -86,6 +93,9 @@ public class SelectAction extends JPanel {
 
             else if(Objects.equals(vista, "categorias"))
                jpanel.add(editarCategoria, gbl_editar);
+
+            else if(Objects.equals(vista, "proveedores"))
+               jpanel.add(editarProv, gbl_editar);
 
             jpanel.revalidate();
             jpanel.repaint();
@@ -100,6 +110,7 @@ public class SelectAction extends JPanel {
 
             ActionEliminarProducto eliminarProducto = new ActionEliminarProducto();
             ActionEliminarCategoria eliminarCategoria = new ActionEliminarCategoria();
+            ActionEliminarProveedor eliminarProv = new ActionEliminarProveedor();
 
             GridBagConstraints gbl_eliminar = new GridBagConstraints();
             gbl_eliminar.gridx = 1;
@@ -111,6 +122,9 @@ public class SelectAction extends JPanel {
 
             else if(Objects.equals(vista, "categorias"))
                jpanel.add(eliminarCategoria, gbl_eliminar);
+
+            else if(Objects.equals(vista, "proveedores"))
+               jpanel.add(eliminarProv, gbl_eliminar);
 
             jpanel.revalidate();
             jpanel.repaint();

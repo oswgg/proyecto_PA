@@ -2,9 +2,11 @@ package Vistas.Componentes.Productos;
 
 import Controladores.CategoriaController;
 import Controladores.ProductoController;
+import Controladores.ProveedorController;
 import Modelos.Categoria;
 import Modelos.ComboItem;
 import Modelos.Producto;
+import Modelos.Proveedor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,8 +18,10 @@ public class ActionAgregarProducto extends JPanel implements ActionListener {
    ProductoController prodController = new ProductoController();
    JTextField txt_nombreProducto, txt_cantidad, txt_precio;
    JComboBox<ComboItem> cB_categoria;
+   JComboBox<ComboItem> cB_prov;
    JButton btn_agregar;
    ArrayList<Categoria> categorias = new CategoriaController().obtenerDatos();
+   ArrayList<Proveedor> proveedores = new ProveedorController().obtenerDatos();
 
    public ActionAgregarProducto() {
       GridBagLayout gbl_contentPane = new GridBagLayout();
@@ -116,6 +120,21 @@ public class ActionAgregarProducto extends JPanel implements ActionListener {
       }));
       panel.add(cB_categoria, gbc_cB_categoria);
 
+      cB_prov = new JComboBox<>();
+      GridBagConstraints gbc_cB_prov = new GridBagConstraints();
+      gbc_cB_prov.insets = new Insets(0, 0, 5, 0);
+      gbc_cB_prov.fill = GridBagConstraints.HORIZONTAL;
+      gbc_cB_prov.gridx = 3;
+      gbc_cB_prov.gridy = 1;
+      panel.add(cB_prov, gbc_cB_prov);
+
+      proveedores.forEach((prov -> {
+         ComboItem provCombo = new ComboItem(prov.getId(), prov.getNombre());
+
+         cB_prov.addItem(provCombo);
+      }));
+      panel.add(cB_categoria, gbc_cB_categoria);
+
       btn_agregar = new JButton("Agregar");
       GridBagConstraints gbc_btn_agregar = new GridBagConstraints();
       gbc_btn_agregar.insets = new Insets(0, 0, 0, 5);
@@ -139,12 +158,15 @@ public class ActionAgregarProducto extends JPanel implements ActionListener {
          Object selectedItem = cB_categoria.getSelectedItem();
          int idCategoriaProducto = ((ComboItem) selectedItem).getKey();
 
+         Object selectProv = cB_prov.getSelectedItem();
+         int idProv = ((ComboItem) selectProv).getKey();
+
          int idProducto = (int) (Math.random() * 100);
 
          if(nombreProducto.isEmpty())
             throw new Error();
          // Guarda el producto
-         Producto nuevo = new Producto(idProducto, nombreProducto, idCategoriaProducto, cantProducto, precioProducto);
+         Producto nuevo = new Producto(idProducto, nombreProducto, idCategoriaProducto, cantProducto, precioProducto, idProv);
          boolean done = prodController.agregar(nuevo);
 
          // Si se guarda los campos se vacian

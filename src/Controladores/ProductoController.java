@@ -24,12 +24,13 @@ public class ProductoController implements Controller<Producto>{
       boolean done = false;
       listaProductos.insert(toInsert);
       try {
-         String query = "INSERT INTO productos(nombre, idCategoria, precio, existencia) VALUES(?, ?, ?, ?)";
+         String query = "INSERT INTO productos(nombre, idCategoria, precio, existencia, idProveedor) VALUES(?, ?, ?, ?, ?)";
          PreparedStatement pstmt = db.conn.prepareStatement(query);
          pstmt.setString(1, toInsert.getNombreProducto());
          pstmt.setInt(2, toInsert.getIdCategoria());
          pstmt.setDouble(3, toInsert.getPrecio());
          pstmt.setInt(4, toInsert.getExistencia());
+         pstmt.setInt(5, toInsert.getidProveedor());
 
          pstmt.executeUpdate();
          done = true;
@@ -53,8 +54,9 @@ public class ProductoController implements Controller<Producto>{
             int idCategoria = rs.getInt("idCategoria");
             int existencia = rs.getInt("existencia");
             double precio = rs.getDouble("precio");
+            int proveedor = rs.getInt("idProveedor");
 
-            Producto item = new Producto(id, nombre, idCategoria, existencia, precio);
+            Producto item = new Producto(id, nombre, idCategoria, existencia, precio, proveedor);
             productos.add(item);
          }
 
@@ -65,6 +67,30 @@ public class ProductoController implements Controller<Producto>{
       return productos;
    }
 
+   public ArrayList<Producto> getExistentes() {
+      ArrayList<Producto> productos = new ArrayList<>();
+
+      try {
+         ResultSet rs = db.stmt.executeQuery("SELECT * FROM productos WHERE existencia > 0 ");
+
+         while(rs.next()) {
+            int id = rs.getInt("id");
+            String nombre = rs.getString("nombre");
+            int idCategoria = rs.getInt("idCategoria");
+            int existencia = rs.getInt("existencia");
+            double precio = rs.getDouble("precio");
+            int proveedor = rs.getInt("idProveedor");
+
+            Producto item = new Producto(id, nombre, idCategoria, existencia, precio, proveedor);
+            productos.add(item);
+         }
+
+      } catch (SQLException e) {
+         System.out.println(e);
+      }
+
+      return productos;
+   }
    @Override
    public boolean editar(int id, Producto nuevo) {
       boolean done = false;
@@ -73,12 +99,13 @@ public class ProductoController implements Controller<Producto>{
       if(pos != -1)
           listaProductos.update(pos, nuevo);
       try {
-         String query = "UPDATE productos SET nombre=?, idCategoria=?, precio=?, existencia=? WHERE id = " + id;
+         String query = "UPDATE productos SET nombre=?, idCategoria=?, precio=?, existencia=?, idProveedor=? WHERE id = " + id;
          PreparedStatement pstmt = db.conn.prepareStatement(query);
          pstmt.setString(1, nuevo.getNombreProducto());
          pstmt.setInt(2, nuevo.getIdCategoria());
          pstmt.setDouble(3, nuevo.getPrecio());
          pstmt.setInt(4, nuevo.getExistencia());
+         pstmt.setInt(5, nuevo.getidProveedor());
 
          pstmt.executeUpdate();
          done = true;
@@ -133,8 +160,9 @@ public class ProductoController implements Controller<Producto>{
             int idCategoria = rs.getInt("idCategoria");
             int existencia = rs.getInt("existencia");
             double precio = rs.getDouble("precio");
+            int proveedor = rs.getInt("idProveedor");
 
-            producto = new Producto(id, nombre, idCategoria, existencia, precio);
+            producto = new Producto(id, nombre, idCategoria, existencia, precio, proveedor);
          }
 
       } catch (SQLException e) {

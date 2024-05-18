@@ -2,6 +2,7 @@ package Servicios;
 
 import Modelos.Categoria;
 import Modelos.Producto;
+import Modelos.Proveedor;
 import Modelos.Venta;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -37,6 +38,11 @@ public class LeerJson<T> {
             case "reporteVentas.json":
                ArrayList<Venta> ventas = gson.fromJson(fr, new TypeToken<List<Venta>>(){}.getType());
                listaDatos = (ArrayList<T>) ventas;
+               break;
+
+            case "proveedores.json":
+               ArrayList<Proveedor> proveedores = gson.fromJson(fr, new TypeToken<List<Proveedor>>(){}.getType());
+               listaDatos = (ArrayList<T>) proveedores;
                break;
          }
       } catch (FileNotFoundException e){

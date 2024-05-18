@@ -1,16 +1,32 @@
 [
   {
-    "id": 81,
+    "id": 30,
     "productosVendidos": [
       {
-        "idProducto": 9,
-        "nombreProducto": "Coca Cola",
-        "cantidad": 5,
-        "idCategoria": 5,
-        "existencia": 10,
+        "idProducto": 15,
+        "nombreProducto": "Coca Cola 600 ml",
+        "idProveedor": 2,
+        "cantidad": 2,
+        "idCategoria": 9,
+        "existencia": 75,
         "precio": 18.0
       }
     ],
-    "total": 90.0
+    "total": 36.0
+  },
+  {
+    "id": 46,
+    "productosVendidos": [
+      {
+        "idProducto": 16,
+        "nombreProducto": "a",
+        "idProveedor": 4,
+        "cantidad": 2,
+        "idCategoria": 9,
+        "existencia": 21,
+        "precio": 2.0
+      }
+    ],
+    "total": 4.0
   }
 ]

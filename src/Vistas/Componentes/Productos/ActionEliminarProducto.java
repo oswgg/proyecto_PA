@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ActionEliminarProducto extends JPanel implements ActionListener {
    ProductoController productosController = new ProductoController();
-   TableProductos productosModelo = new TableProductos();
+   TableProductos productosModelo = new TableProductos(false);
    DefaultTableModel modeloTabla = productosModelo.getModelo();
    JTable tablaProductos = productosModelo.getTable();
    JButton btnConfirmar = new JButton("Confirmar");

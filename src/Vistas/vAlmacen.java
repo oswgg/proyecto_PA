@@ -3,6 +3,7 @@ package Vistas;
 import Controladores.CategoriaController;
 import Controladores.ProductoController;
 import Controladores.VentaController;
+import Modelos.Almacen;
 import Modelos.ComboItem;
 import Modelos.Producto;
 import Modelos.Venta;
@@ -21,7 +22,7 @@ public class vAlmacen extends JPanel {
 
    ProductoController prodController = new ProductoController();
    CategoriaController categoController = new CategoriaController();
-   TableProductos productosModelo = new TableProductos();
+   TableProductos productosModelo = new TableProductos(false);
    DefaultTableModel modeloTabla = productosModelo.getModelo();
    JTable tablaProductos = productosModelo.getTable();
    VentaController ventaController = new VentaController();
@@ -107,12 +108,14 @@ public class vAlmacen extends JPanel {
          String nombre = selectedProduct.getNombreProducto();
          int cantidad = selectedProduct.getExistencia() + cantAIngresar;
          double precio = selectedProduct.getPrecio();
+         int idProv = selectedProduct.getidProveedor();
 
          int idCategoria = selectedProduct.getIdCategoria();
 
          // Crea el nuevo producto con los datos modificados
-         Producto nuevo = new Producto(id, nombre, idCategoria, cantidad , precio);
-         boolean done = prodController.editar(nuevo.getIdProducto(), nuevo);
+         Producto nuevo = new Producto(id, nombre, idCategoria, cantidad , precio, idProv);
+         Almacen almacen = new Almacen();
+         boolean done = almacen.entradaProd(nuevo);
 
          // Si se hizo correctamente la modificacion actualiza la tabla
          if(done) {
@@ -149,12 +152,13 @@ public class vAlmacen extends JPanel {
          String nombre = selectedProduct.getNombreProducto();
          int cantidad = selectedProduct.getExistencia() - cantAIngresar;
          double precio = selectedProduct.getPrecio();
-
+         int idProv = selectedProduct.getidProveedor();
          int idCategoria = selectedProduct.getIdCategoria();
 
          // Crea el nuevo producto con los datos modificados
-         Producto nuevo = new Producto(id, nombre, idCategoria, cantidad , precio);
-         boolean done = prodController.editar(nuevo.getIdProducto(), nuevo);
+         Producto nuevo = new Producto(id, nombre, idCategoria, cantidad , precio, idProv);
+         Almacen almacen = new Almacen();
+         boolean done = almacen.entradaProd(nuevo);
 
          // Si se hizo correctamente la modificacion actualiza la tabla
          if(done) {

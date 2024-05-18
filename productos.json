@@ -1,10 +1,11 @@
 [
   {
-    "idProducto": 9,
-    "nombreProducto": "Coca Cola",
+    "idProducto": 15,
+    "nombreProducto": "Coca Cola 600 ml",
+    "idProveedor": 9,
     "cantidad": 0,
-    "idCategoria": 5,
-    "existencia": 5,
+    "idCategoria": 9,
+    "existencia": 74,
     "precio": 18.0
   }
 ]

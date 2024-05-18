@@ -2,9 +2,11 @@ package Vistas.Componentes.Productos;
 
 import Controladores.CategoriaController;
 import Controladores.ProductoController;
+import Controladores.ProveedorController;
 import Modelos.Categoria;
 import Modelos.ComboItem;
 import Modelos.Producto;
+import Modelos.Proveedor;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -16,13 +18,16 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ActionEditarProducto extends JPanel implements ActionListener{
-   TableProductos productoModelo = new TableProductos();
+   TableProductos productoModelo = new TableProductos(false);
    DefaultTableModel modeloTabla = productoModelo.getModelo();
    JTable tablaProductos = productoModelo.getTable();
    ProductoController prodController = new ProductoController();
    CategoriaController categoController = new CategoriaController();
+   ProveedorController provController = new ProveedorController();
    JTextField txt_nombre, txt_cantidad, txt_precio;
    JComboBox<ComboItem> combo = new JComboBox<>();
+   JComboBox<ComboItem> cB_prov = new JComboBox<>();
+
    JButton confirmar;
 
    public ActionEditarProducto() {
@@ -104,12 +109,24 @@ public class ActionEditarProducto extends JPanel implements ActionListener{
 
       panel.add(combo, gbc_combo);
 
+      GridBagConstraints gbc_cb_prov = new GridBagConstraints();
+      gbc_cb_prov.gridx = 4;
+      gbc_cb_prov.gridy = 4;
+      panel.add(cB_prov, gbc_cb_prov);
+
       // Llena el comboBox de categorias
       ArrayList<Categoria> categorias = categoController.obtenerDatos();
       categorias.forEach((categoria -> {
          ComboItem categoriaCombo = new ComboItem(categoria.getIdCategoria(), categoria.getCategoria());
 
          combo.addItem(categoriaCombo);
+      }));
+
+      ArrayList<Proveedor> proveedores = provController.obtenerDatos();
+      proveedores.forEach((prov -> {
+         ComboItem provCombo = new ComboItem(prov.getId(), prov.getNombre());
+         System.out.println(cB_prov);
+         cB_prov.addItem(provCombo);
       }));
 
       confirmar = new JButton("Actualizar");
@@ -165,11 +182,14 @@ public class ActionEditarProducto extends JPanel implements ActionListener{
          Object selectedCombo = combo.getSelectedItem();
          int idCategoria = ((ComboItem) selectedCombo).getKey();
 
+         Object selectedProv = combo.getSelectedItem();
+         int idProv = ((ComboItem) selectedProv).getKey();
+
          if(nombre.isEmpty())
             throw new Error();
 
          // Crea el nuevo producto con los datos modificados
-         Producto nuevo = new Producto(id, nombre, idCategoria, cantidad, precio);
+         Producto nuevo = new Producto(id, nombre, idCategoria, cantidad, precio, idProv);
          boolean done = prodController.editar(nuevo.getIdProducto(), nuevo);
 
          // Si se hizo correctamente la modificacion actualiza la tabla

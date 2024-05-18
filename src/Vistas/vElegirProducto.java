@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class vElegirProducto extends JFrame {
-   TableProductos modeloProductos = new TableProductos();
+   TableProductos modeloProductos = new TableProductos(true);
    JTable tablaProds = modeloProductos.getTable();
    DefaultTableModel modeloTabla = modeloProductos.getModelo();
    ProductoController prodController = new ProductoController();

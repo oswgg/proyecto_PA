@@ -49,7 +49,6 @@ public class VentaController {
             Producto prodBeforeVender = prodController.getById(id);
 
             String nombre = prodBeforeVender.getNombreProducto();
-            int existencia = prodBeforeVender.getExistencia() - cantVender;
             double precio = prodBeforeVender.getPrecio();
 
             int idCategoria = prodBeforeVender.getIdCategoria();
@@ -69,8 +68,8 @@ public class VentaController {
             }
 
             // Crea el nuevo producto con los datos modificados
-            Producto nuevo = new Producto(id, nombre, idCategoria, existencia , precio);
-            prodController.editar(nuevo.getIdProducto(), nuevo);
+            //Producto nuevo = new Producto(id, nombre, idCategoria, existencia , precio);
+            //prodController.editar(nuevo.getIdProducto(), nuevo);
          });
       }catch (SQLException err) {
          System.out.println("error de aqui" + err);
