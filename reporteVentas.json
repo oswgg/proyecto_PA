@@ -1,0 +1,17 @@
+[
+  {
+    "id": 64,
+    "productosVendidos": [
+      {
+        "idProducto": 3,
+        "nombreProducto": "Queso",
+        "idProveedor": 2,
+        "cantidad": 1,
+        "idCategoria": 2,
+        "existencia": 100,
+        "precio": 50.0
+      }
+    ],
+    "total": 50.0
+  }
+]
